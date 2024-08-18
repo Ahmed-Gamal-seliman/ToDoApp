@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="blue">#2196F3</color>
+    <color name="lightBlue">#5D9CEC</color>
+    <color name="blue_Opa">#DFECDB</color>
+
+
+    <color name="bg_AutoComplete">@color/darkBlue</color>
+
+    <color name="primaryColor">@color/lightBlue</color>
+    <color name="secondaryColor">@color/lightBlue</color>
+    <color name="backgroundColor">@color/light_black</color>
+
+    <color name="itemColor">@color/blue</color>
+
+    <color name="light_black">#060E1E</color>
+    <color name="settings_bg">@color/light_black</color>
+    <color name="settings_text_color">@color/black</color>
+    <color name="ToDoList_text_color">@color/black</color>
+    <color name="AddNewTask_text_color">@color/white</color>
+    <color name="Language_and_mode_color">@color/white</color>
+    <color name="selectTimeColor">@color/colorWhite_OPA</color>
+    <color name="ic_check_color">@color/white</color>
+    <color name="rv_bg_color">@color/darkBlue</color>
+    <color name="task_done_color">@color/lightGreen</color>
+</resources>

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">To Do List</string>
+    <string name="to_do_list">المهام المطلوب تنفيها</string>
+    <string name="add_new_task">أضف مهام جديدة</string>
+    <string name="enter_your_task">أكتب المهام</string>
+    <string name="select_time">اخر الوقت</string>
+    <string name="add_task">أضف مهام</string>
+    <string name="settings">الإعدادت</string>
+    <string name="save">تخزين المهمه</string>
+    <string name="language">اللغه</string>
+    <string name="light">إضاءة</string>
+    <string name="english">إنجليزى</string>
+    <string name="modes">الإضاءات</string>
+    <string name="select_date" >أختر التاريخ</string>
+
+    <string-array name="Modes">
+        <item>إضاءة</item>
+        <item>إضاءة خافته</item>
+
+    </string-array>
+
+    <string-array name="Languages">
+        <item>إنجليزى</item>
+        <item>عربى</item>
+
+    </string-array>
+</resources>
