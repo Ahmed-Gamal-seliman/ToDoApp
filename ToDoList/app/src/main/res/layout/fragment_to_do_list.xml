@@ -37,6 +37,12 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+<CalendarView
+    android:id="@+id/calenderView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toBottomOf="@id/Abl_toDoList"
+    />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -50,7 +56,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Abl_toDoList"
+        app:layout_constraintTop_toBottomOf="@id/calenderView"
         app:layout_constraintVertical_bias="0.0"
         tools:listitem="@layout/item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

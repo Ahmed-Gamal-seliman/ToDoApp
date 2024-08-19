@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 class Repository(val application: Application) {
     private val taskDao:TaskDAO?
     private var allTasks: LiveData<MutableList<Task>>?=null
+    private var allTasksAccordingToDate: LiveData<MutableList<Task>>?=null
 
       var roomDb:TaskRoomDatabase?=null
           private set
@@ -49,5 +50,13 @@ class Repository(val application: Application) {
         return allTasks
     }
 
+
+    fun getAllTasksAccordingToDate(date:String) : LiveData<MutableList<Task>>?
+    {
+        TaskRoomDatabase.databaseWriteExecutor.execute {
+            allTasksAccordingToDate= taskDao?.getAllTasksAccordingToDate(date)
+        }
+       return allTasksAccordingToDate
+    }
 
 }

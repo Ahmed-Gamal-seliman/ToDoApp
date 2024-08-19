@@ -36,5 +36,9 @@ class TaskViewModel (application: Application) : AndroidViewModel(application) {
         return repository.getAllTasks()
     }
 
+    fun getAllTasksAccordingToDate(date:String) : LiveData<MutableList<Task>>?
+    {
+       return repository.getAllTasksAccordingToDate(date)
+    }
 
 }

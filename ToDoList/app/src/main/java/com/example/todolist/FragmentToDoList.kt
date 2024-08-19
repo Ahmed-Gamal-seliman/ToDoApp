@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.RecyclerView.RecyclerListener
 import com.example.todolist.DataBase.Task
 import com.example.todolist.databinding.FragmentToDoListBinding
+import io.reactivex.internal.util.AppendOnlyLinkedArrayList
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.util.Calendar
 
@@ -31,6 +32,7 @@ class FragmentToDoList: Fragment(){
     lateinit var binding:FragmentToDoListBinding
 
     private var calender:Calendar?=null
+    private var CalenderView:CalendarView?=null
 
      var adapter:TaskAdapter?=null
     var adapterSearch:TaskAdapter?=null
@@ -145,6 +147,16 @@ class FragmentToDoList: Fragment(){
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        binding.calenderView.setOnDateChangeListener { view, year, month, dayOfMonth ->
+
+            val date:String= "${dayOfMonth}/${month+1}/${year}"
+            com.example.todolist.Application.taskViewModel?.getAllTasksAccordingToDate(date)?.observe(viewLifecycleOwner)
+            {
+                Toast.makeText(context,date,Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(context,it.size.toString(),Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 

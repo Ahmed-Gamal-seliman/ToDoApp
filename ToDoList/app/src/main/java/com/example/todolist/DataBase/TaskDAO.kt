@@ -26,6 +26,8 @@ interface TaskDAO {
     fun getAllTasks(): LiveData<MutableList<Task>>?
 
 
+    @Query("select * from Task where date=:date")
+    fun getAllTasksAccordingToDate(date:String) : LiveData<MutableList<Task>>?
 
 
 
