@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginEnd
@@ -16,17 +17,29 @@ import com.example.todolist.databinding.ItemBinding
 class TaskAdapter(val tasks:MutableList<com.example.todolist.DataBase.Task>): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     lateinit var binding: ItemBinding
-    class TaskViewHolder(val binding:ItemBinding): RecyclerView.ViewHolder(binding.root)
+    var onItemClick:ItemOnClickListener?=null
+
+
+    inner class TaskViewHolder(val binding:ItemBinding): RecyclerView.ViewHolder(binding.root)
     {
 
 
         @SuppressLint("ResourceAsColor")
-        fun bind(task:Task)
+        fun bind(task:Task,position:Int)
         {
             Log.e("task status",task.status)
+
+            binding.root.setOnClickListener {
+                Log.e("in adapter position",position.toString())
+                onItemClick?.onItemClick(task,position)
+
+            }
+
             binding.apply {
                 tvPlay.text = task.title
                 tvTime.text = task.time
+
+
 
                 pendingDesignOfItem()
 
@@ -45,14 +58,19 @@ class TaskAdapter(val tasks:MutableList<com.example.todolist.DataBase.Task>): Re
                     if(task.status == "Pending")
                     {
                         Log.e("in pending","ok")
-                        Application.taskViewModel?.upDateTask(task.id)
+                        Application.taskViewModel?.updateTaskStatus(task.id)
+                        task.status= "Done"
                         doneDesignOfItem()
+
                     }
 
 
 
                 }
+
             }
+
+
 
         }
 
@@ -96,14 +114,28 @@ class TaskAdapter(val tasks:MutableList<com.example.todolist.DataBase.Task>): Re
 
     }
 
+    fun updateTask(task:Task,position:Int)
+    {
+        tasks[position] = task
+        notifyItemChanged(position)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         return TaskViewHolder( ItemBinding.inflate(LayoutInflater.from(parent.context),parent, false))
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(tasks[position])
+        holder.bind(tasks[position],position)
+
+
     }
 
     override fun getItemCount(): Int =  tasks.size
 
+
+    interface ItemOnClickListener{
+        fun onItemClick(task:Task,position:Int)
+    }
+
+
 }
+

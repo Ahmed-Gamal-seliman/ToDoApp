@@ -4,6 +4,7 @@ package com.example.todolist
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -21,9 +22,7 @@ import com.example.todolist.DataBase.TaskViewModel
 import com.example.todolist.databinding.ActivityMainBinding
 
 
-class MainActivity : AppCompatActivity(), FragmentAddToDo.OnTimePickerClickListener,TimePickerFragment.TimePickerOnSetListener
-,FragmentAddToDo.DatePickerOnClickListener
-,DatePickerFragment.OnDataPickerClickSettedListener
+class MainActivity : AppCompatActivity()
 ,FragmentAddToDo.AddItemClickListener{
     private lateinit var binding:ActivityMainBinding
 
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), FragmentAddToDo.OnTimePickerClickListe
 
 
 
-
+    Log.e("onCreate","Yes On create")
 
 
 
@@ -69,10 +68,16 @@ class MainActivity : AppCompatActivity(), FragmentAddToDo.OnTimePickerClickListe
     private fun bottomNavMenuListener() {
         binding.bottomNavBarBottomMenu.setOnNavigationItemSelectedListener {
 
+
+            Log.e("clicked bottom nav","yes")
             val fragment:Fragment= when(it.itemId)
             {
                 R.id.miMenu -> FragmentToDoList()
-                R.id.miSettings -> FragmentSettings()
+
+                R.id.miSettings -> {
+                    Log.e("settings","yes")
+                    FragmentSettings()
+                }
                 else -> throw IllegalArgumentException("your choice is not right")
             }
             pushFragment(fragment)
@@ -90,22 +95,16 @@ class MainActivity : AppCompatActivity(), FragmentAddToDo.OnTimePickerClickListe
     }
 
     private fun pushFragment(fragment: Fragment) {
-        if(fragment is FragmentToDoList)
-        {
+
             supportFragmentManager.beginTransaction()
                 .replace(binding.fragmentContainer.id,fragment)
-                .addToBackStack("ListFragment")
+                .disallowAddToBackStack()
                 .commit()
-        }
-        else
-        {
-            supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id,fragment)
-                .commit()
-        }
+
 
 
     }
+
 
 
 
@@ -120,41 +119,14 @@ class MainActivity : AppCompatActivity(), FragmentAddToDo.OnTimePickerClickListe
 
     override fun onResume() {
         super.onResume()
-        binding.bottomNavBarBottomMenu.selectedItemId = R.id.miMenu
+//        binding.bottomNavBarBottomMenu.selectedItemId = R.id.miMenu
     }
 
-    override fun onTimePickerClick() {
-        TimePickerFragment().show(supportFragmentManager,null)
-    }
 
-    override fun onTimePickerSettedListener(hourOfDay:Int,minute:Int, AM_PM: String) {
-        var minutes_string:String=minute.toString()
-        if(minute<10)
-        {
-            minutes_string=""
-            minutes_string= "0${minute}"
-        }
-        val fragmentAddToDO:FragmentAddToDo =supportFragmentManager.findFragmentByTag("AddNewTask") as FragmentAddToDo
-        if(hourOfDay >12) {
-            fragmentAddToDO.binding.tvTime.text = "${hourOfDay - 12} : ${minutes_string}  ${AM_PM}"
-        return
-        }
-        else
-        {
-            fragmentAddToDO.binding.tvTime.text = "${hourOfDay} : ${minutes_string}  ${AM_PM}"
-        }
 
-    }
 
-    override fun datePickerOnClick() {
-        DatePickerFragment().show(supportFragmentManager,null)
-    }
 
-    override fun onDataPickerClickSetted(year: Int, month: Int, dayOfMonth: Int) {
-        val fragmentAddToDO:FragmentAddToDo =supportFragmentManager.findFragmentByTag("AddNewTask") as FragmentAddToDo
 
-        fragmentAddToDO.binding.tvDate.text= "${dayOfMonth}/${month+1}/${year}"
-    }
 
     override fun addItemClick(task: Task) {
 

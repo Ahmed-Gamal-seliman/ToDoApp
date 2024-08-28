@@ -24,12 +24,15 @@ class TaskViewModel (application: Application) : AndroidViewModel(application) {
         repository.deleteTask(id)
     }
 
-    fun upDateTask(id:Int?)
+    fun updateTaskStatus(id:Int?)
     {
-        repository.upDateTask(id)
+        repository.updateTaskStatus(id)
     }
 
-
+    fun updateTask(task:Task)
+    {
+        repository.updateTask(task)
+    }
 
     fun getAllTasks(): LiveData<MutableList<Task>>?
     {

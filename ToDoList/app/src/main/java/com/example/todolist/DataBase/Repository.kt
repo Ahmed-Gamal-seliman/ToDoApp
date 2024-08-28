@@ -19,9 +19,9 @@ class Repository(val application: Application) {
     fun insertTask(task: Task)
     {
 
-        TaskRoomDatabase.databaseWriteExecutor.execute {
+
             taskDao?.insertTask(task)
-        }
+
 
 
     }
@@ -29,24 +29,30 @@ class Repository(val application: Application) {
 
     fun deleteTask(id:Int?)
     {
-        TaskRoomDatabase.databaseWriteExecutor.execute {
+
             taskDao?.deleteTask(id)
-        }
+
+
     }
 
-    fun upDateTask(id:Int?)
+    fun updateTaskStatus(id:Int?)
     {
-        TaskRoomDatabase.databaseWriteExecutor.execute {
-            taskDao?.upDateTask(id)
-        }
+
+            taskDao?.updateTaskStatus(id)
+
     }
 
     fun getAllTasks(): LiveData<MutableList<Task>>?
     {
-        TaskRoomDatabase.databaseWriteExecutor.execute {
+
             allTasks= taskDao?.getAllTasks()
-        }
+
         return allTasks
+    }
+
+    fun updateTask(task:Task)
+    {
+        taskDao?.updateTask(task)
     }
 
 

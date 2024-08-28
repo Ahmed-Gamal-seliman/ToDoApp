@@ -30,7 +30,7 @@ abstract class TaskRoomDatabase: RoomDatabase() {
                     {
                         INSTANCE =Room.databaseBuilder(context.applicationContext,TaskRoomDatabase::class.java,
                             "Task_db")
-                            .addCallback(roomCallBack)
+                            .allowMainThreadQueries()
                             .build()
 
 

@@ -1,26 +1,31 @@
 package com.example.todolist
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.TimePicker
+import androidx.core.graphics.scaleMatrix
 import com.example.todolist.DataBase.Task
 import com.example.todolist.databinding.FragmentNewTodoBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 class FragmentAddToDo: BottomSheetDialogFragment() {
 
     lateinit var binding:FragmentNewTodoBinding
 
-    private  var onTimePickerClick:OnTimePickerClickListener?=null
 
-
-    private var datePickerOnClick: DatePickerOnClickListener?=null
 
     private var addItemClick:AddItemClickListener?=null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -28,8 +33,8 @@ class FragmentAddToDo: BottomSheetDialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        onTimePickerClick= context as MainActivity
-        datePickerOnClick = context as MainActivity
+
+
         addItemClick =context as MainActivity
     }
     override fun onCreateView(
@@ -52,23 +57,69 @@ class FragmentAddToDo: BottomSheetDialogFragment() {
 
     private fun handleOnSelectedTimeClicked() {
         binding.tvSelectTime.setOnClickListener {
-            //call back to Main Activity
 
-            onTimePickerClick?.onTimePickerClick()
+            showTimePicker()
 
 
         }
     }
+
+    private fun showTimePicker() {
+
+        val time = Calendar.getInstance()
+        TimePickerDialog(
+            context,
+            object: TimePickerDialog.OnTimeSetListener
+            {
+                override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
+                    time.set(0,0,0,hourOfDay,minute)
+                   binding.tvTime.text= time.formatTime()
+                }
+
+            },
+            time.get(Calendar.HOUR_OF_DAY),
+            time.get(Calendar.MINUTE),
+            false
+        ).show()
+    }
+
+
 
     private fun handleOnSelectedDateClicked() {
         binding.tvSelectDate.setOnClickListener {
-            //call back to Main Activity
 
-            datePickerOnClick?.datePickerOnClick()
+            showDatePicker()
 
 
         }
     }
+
+    private fun showDatePicker() {
+
+        val date = Calendar.getInstance()
+
+            DatePickerDialog(
+                requireContext(),
+                object : DatePickerDialog.OnDateSetListener {
+                    override fun onDateSet(
+                        view: DatePicker?,
+                        year: Int,
+                        month: Int,
+                        dayOfMonth: Int
+                    ) {
+
+                        date.set(year,month,dayOfMonth)
+                    binding.tvDate.text = date.formatDate()
+                    }
+
+                },
+                date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)
+
+                ).show()
+    }
+
 
     private fun isvalidationSuccess(): Boolean {
         val validateTaskName:String?= validateTaskNameEntry(binding.TietEnterTask.text.toString())
@@ -96,7 +147,7 @@ class FragmentAddToDo: BottomSheetDialogFragment() {
             task.time=binding.tvTime.text.toString()
             task.date= binding.tvDate.text.toString()
 
-            Log.e("save float","ok")
+
             addItemClick?.addItemClick(task)
             com.example.todolist.Application.taskViewModel?.insertTask(task)
 
@@ -114,15 +165,6 @@ class FragmentAddToDo: BottomSheetDialogFragment() {
         return null
     }
 
-    interface OnTimePickerClickListener
-    {
-        fun onTimePickerClick()
-    }
-
-    interface DatePickerOnClickListener
-    {
-        fun datePickerOnClick()
-    }
 
     interface AddItemClickListener
     {

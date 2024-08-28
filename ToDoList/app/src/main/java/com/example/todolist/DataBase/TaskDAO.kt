@@ -19,7 +19,10 @@ interface TaskDAO {
     fun deleteTask(id:Int?)
 
     @Query("UPDATE Task SET status = 'Done' WHERE id=:id")
-    fun upDateTask(id:Int?)
+    fun updateTaskStatus(id:Int?)
+
+    @Update
+    fun updateTask(task:Task)
 
     @Query("select * from Task")
 

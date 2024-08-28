@@ -44,7 +44,10 @@ class FragmentSettings: Fragment() {
                 config,
                 (context as MainActivity).resources.displayMetrics
             )
+
             activity?.recreate()
+
+
         }
     }
 
@@ -129,6 +132,8 @@ class FragmentSettings: Fragment() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         }
+
+        activity?.recreate()
     }
 
     private fun goToNightMode() {
@@ -137,6 +142,8 @@ class FragmentSettings: Fragment() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         }
+
+        activity?.recreate()
     }
 
     private fun isNight(): Boolean {

@@ -11,7 +11,7 @@
     <string name="light">Light</string>
     <string name="english">English</string>
     <string name="modes">Modes</string>
-    <string name="select_date" >Select Date</string>
+    <string name="select_date">Select Date</string>
 
     <string-array name="Modes">
         <item>Light</item>
